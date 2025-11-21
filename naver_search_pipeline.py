@@ -6,7 +6,7 @@ from preprocess.naver_preprocess import preprocessing
 
 # 사용할 Operator Import
 from airflow.providers.sqlite.operators.sqlite import SqliteOperator
-from airflow.providers.http.sensor.http import httpSensor
+from airflow.providers.http.sensors.http import HttpSensor
 from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
@@ -53,7 +53,7 @@ with DAG(
     )
 
     # http 센서를 이용해 응답 확인 (감지하는 오퍼레이터로 실제 데이터를 가져오지 않음)
-    is_api_available = httpSensor(
+    is_api_available = HttpSensor(
         task_id = 'is_api_available',
         http_conn_id = 'naver_search_api',
         endpoint = 'v1/search/local.json', # url -uri에서 Host 부분을 제외한 파트]
