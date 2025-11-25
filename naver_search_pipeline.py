@@ -66,7 +66,10 @@ with DAG(
             'query' : '김치찌개',
             'display' : 5
         }, # 요청 파라미터
-        response_check = lambda response: response.json()
+        response_check=lambda response: (
+            response.status_code == 200
+            and response.json().get('items') is not None
+        )
     )
 
     # 네이버 검색 결과를 가져올 오퍼레이터
